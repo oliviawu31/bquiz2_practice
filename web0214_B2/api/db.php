@@ -1,9 +1,8 @@
 <?php
-
-session_start();
+    session_start();
 
 class DB{
-    protected $dsn="mysql:host=localhost;charset:utf8;dbname=db0211";
+    protected $dsn="mysql:host=localhost;charset=utf8;dbname=db0214";
     protected $pdo;
     protected $table;
 
@@ -13,13 +12,13 @@ class DB{
     }
 
     function all(...$arg){
-        $sql=" SELECT * FROM $this->table";
+        $sql=" SELECT * FROM $this->table ";
         if(!empty($arg[0])){
             if(is_array($arg[0])){
                 $where=$this->a2s($arg[0]);
-                $sql =$sql . " WHERE " . join(" && ",$where);
+                $sql = $sql . " WHERE " . join (" && ",$where);
             }else{
-                $sql .= $arg[0];
+                $sql .= $arg[0]; 
             }
         }
         if(!empty($arg[1])){
@@ -32,9 +31,9 @@ class DB{
         $sql=" SELECT * FROM $this->table ";
         if(is_array($id)){
             $where=$this->a2s($id);
-            $sql = $sql . " WHERE " . join(" && ",$where);
+            $sql = $sql . " WHERE " . join (" && ",$where);
         }else{
-            $sql .= " WHERE `id`='$id'";
+            $sql .= " WHERE `id`='$id' ";
         }
         return $this->fetchOne($sql);
     }
@@ -44,25 +43,15 @@ class DB{
             $id=$array['id'];
             unset($array['id']);
             $set=$this->a2s($array);
-            $sql = "UPDATE $this->table SET " .join(',',$set)." WHERE `id`='$id'";
+            $sql = " UPDATE $this->table SET ".join(',',$set)." where `id`='$id' ";
         }else{
-            $cols=array_keys($array);
-            $sql=" INSERT INTO $this->table(`".join("`,`",$cols)."`) VALUES('".join("','",$array)."')";
+            $col=array_keys($array);
+            $sql= " INSERT INTO $this->table(`".join("`,`",$cols)."`) VALUES(`".join(",",$array)."`) ";
         }
         return $this->pdo->exec($sql);
     }
 
-    function del($id){
-        $sql=" SELECT * FROM $this->table";
-
-        if(is_array($id)){
-            $where=$this->a2s($id);
-            $sql =$sql . " WHERE ". join(" && ",$where);
-        }else{
-            $sql .= " WHERE `id`='$id' ";
-        }
-        return $this->pdo->exec($sql);
-    }
-
-
+    
 }
+
+?>
