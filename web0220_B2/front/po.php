@@ -19,7 +19,7 @@
 
 <fieldset style='width:500px;display:inline-block'>
     <legend>文章列表</legend>
-    <div id="list"></div>
+    <div id="postList"></div>
 </fieldset>
 
 <script>
@@ -30,10 +30,12 @@ $(".type").on('click', function() {
     $("#type").text($(this).text())
     let type = $(this).data('type')
     getList(type)
+    // console.log('type');
+
 })
 
 function getList(type) {
-    $("#list").load("./api/get_list.php", {
+    $("#postList").load("./api/get_list.php", {
         type
     })
 }
